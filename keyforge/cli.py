@@ -3,10 +3,6 @@ import argparse
 from keyforge.forge import forge_password
 
 
-def parse_length(value):
-    return None if value.lower() == "none" else int(value)
-
-
 def setup_cli():
     parser = argparse.ArgumentParser(
         prog="KeyForge",
@@ -21,8 +17,8 @@ def setup_cli():
     key_parser.add_argument(
         "-l",
         "--length",
-        type=parse_length,
-        default=None,
+        type=int,
+        default=24,
         help="The length of the new password",
     )
     key_parser.add_argument(

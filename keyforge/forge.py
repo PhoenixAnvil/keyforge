@@ -42,7 +42,7 @@ def forge_password(length, alpha, numeric, special, combo):
         char_classes.add("s")
 
     password = ""
-    while length is None or len(password) < length:
+    while len(password) < length:
         char_class = choice(list(char_classes))
         if char_class == "a":
             password += random_letter()
