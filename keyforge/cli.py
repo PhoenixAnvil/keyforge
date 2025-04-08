@@ -1,9 +1,23 @@
+"""
+KeyForge CLI module.
+
+This module defines the command-line interface for the KeyForge secure
+password generation tool. It handles argument parsing and delegates
+to the core password generation logic in `forge.py`.
+"""
+
 import argparse
 
 from keyforge.forge import forge_password
 
 
 def setup_cli():
+    """
+    Set up and parse the command-line interface for the KeyForge tool.
+
+    Returns:
+        argparse.Namespace: Parsed command-line arguments.
+    """
     parser = argparse.ArgumentParser(
         prog="KeyForge",
         description="Secure Password Generator CLI Tool",
@@ -50,6 +64,13 @@ def setup_cli():
 
 
 def main():
+    """
+    Entry point for the KeyForge CLI.
+
+    Parses command-line arguments and generates a secure password
+    based on user-specified options. Prints the password if verbose
+    output is enabled.
+    """
     args = setup_cli()
 
     if args.command == "password":
