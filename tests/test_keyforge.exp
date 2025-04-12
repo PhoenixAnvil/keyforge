@@ -1,0 +1,93 @@
+#!/usr/bin/expect -f
+
+# Color definitions
+set ESC "\033"
+set GREEN "${ESC}\[32m"
+set RED "${ESC}\[31m"
+set YELLOW "${ESC}\[33m"
+set BOLD "${ESC}\[1m"
+set RESET "${ESC}\[0m"
+
+# Test summary variables
+set tests 0
+set pass 0
+set fail 0
+set timeout_val 5
+set timeout $timeout_val
+
+# === Test 1: Combination ===
+puts "${YELLOW}Combination Test${RESET}"
+spawn keyforge password -l 16 -c -v
+expect {
+    -re {[A-Za-z0-9`~!@#$%^&*()_+\-=$begin:math:display$$end:math:display${};':"\\|,.<>/?]{16}} {
+        incr tests
+        incr pass
+        puts "${GREEN}✅ PASS - COMBINATIONS${RESET}"
+    }
+    timeout {
+        incr tests
+        incr fail
+        puts "${RED}❌ TIMEOUT - COMBINATIONS${RESET}"
+    }
+    default {
+        incr tests
+        incr fail
+        puts "${RED}❌ FAIL - COMBINATIONS${RESET}"
+    }
+}
+
+# === Test 2: Alphabet ===
+puts "${YELLOW}Alphabetic Test${RESET}"
+spawn keyforge password -l 16 -a -v
+expect {
+    -re {[A-Za-z]{16}} {
+        incr tests
+        incr pass
+        puts "${GREEN}✅ PASS - ALPHABET${RESET}"
+    }
+    timeout {
+        incr tests
+        incr fail
+        puts "${RED}❌ TIMEOUT - ALPHABET${RESET}"
+    }
+    default {
+        incr tests
+        incr fail
+        puts "${RED}❌ FAIL - ALPHABET${RESET}"
+    }
+}
+
+# === Test 3: Numeric ===
+puts "${YELLOW}Numeric Test${RESET}"
+spawn keyforge password -l 16 -n -v
+expect {
+    -re {[0-9]{16}} {
+        incr tests
+        incr pass
+        puts "${GREEN}✅ PASS - NUMERIC${RESET}"
+    }
+    timeout {
+        incr tests
+        incr fail
+        puts "${RED}❌ TIMEOUT - NUMERIC${RESET}"
+    }
+    default {
+        incr tests
+        incr fail
+        puts "${RED}❌ FAIL - NUMERIC${RESET}"
+    }
+}
+
+# === Summary ===
+puts "\n${BOLD}TEST SUMMARY${RESET}"
+puts "Tests Executed : $tests"
+puts "Tests Passed   : $pass"
+puts "Tests Failed   : $fail"
+
+if {$fail == 0} {
+    puts "\n${GREEN}✅ ALL TESTS PASSED!${RESET}"
+    exit 0
+} else {
+    puts "\n${RED}❌ SOME TESTS FAILED.${RESET}"
+    exit 1
+}
