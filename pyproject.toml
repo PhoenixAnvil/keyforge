@@ -8,3 +8,21 @@ exclude = '''
   | dist
 )/
 '''
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "keyforge"
+version = "0.1.0"
+description = "A secure password generator forged in the fires of The Forge."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Jason Alan Smith", email = "jason.smith@phoenixanvilabs.dev" }
+]
+dependencies = []
+
+[project.scripts]
+keyforge = "keyforge.cli:main"
